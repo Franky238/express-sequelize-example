@@ -73,7 +73,8 @@ const likeImage = async (req, res) => {
         const [updated] = await models.Image.increment(['likes_count'], { where: { id: imageId } });
 
         if (updated) {
-            return res.status(200).json("Image liked");
+            const likedImage = await models.Image.findOne({ where: { id: imageId } });
+            return res.status(200).json(likedImage);
         }
 
         return res.status(500).send("Cannot like image from unknown reason");
@@ -88,7 +89,8 @@ const unlikeImage = async (req, res) => {
         const [updated] = await models.Image.decrement(['likes_count'], { where: { id: imageId } });
 
         if (updated) {
-            return res.status(200).json("Image unliked");
+            const unlikedImage = await models.Image.findOne({ where: { id: imageId } });
+            return res.status(200).json(unlikedImage);
         }
 
         return res.status(500).send("Cannot unlike image from unknown reason");
