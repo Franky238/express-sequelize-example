@@ -15,8 +15,9 @@ const createImage = async (req, res) => {
         let body = req.body;
         if (Object.keys(body).includes('likes_count')) {
             console.warn('Skipping likes_count parameter');
-            body.likes_count = 0;
         }
+
+        body.likes_count = 0;
 
         const image = await models.Image.create(body);
 
